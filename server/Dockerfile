@@ -14,7 +14,7 @@ RUN npm install -g nodemon
 
 COPY . /api
 
-EXPOSE 8080
+EXPOSE 8888
 
 ## THE LIFE SAVER
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait

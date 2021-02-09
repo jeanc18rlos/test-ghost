@@ -17,7 +17,7 @@ module.exports = (phase) => {
   console.log(`isDev:${isDev}  isProd:${isProd}   isStaging:${isStaging}`);
 
   const env = {
-    API_URL: "http://localhost:8080/graphql",
+    API_URL: "http://api:8888/graphql",
     DOMAIN_URL: "https://thoughtmedia",
     RESTURL_SPEAKERS: (() => {
       if (isDev) return "http://localhost:4000/speakers";

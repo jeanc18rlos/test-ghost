@@ -4,15 +4,22 @@ import { useEffect, useState } from "react";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useRouter } from "next/router";
 
+
 export default function Home({ data }) {
   const router = useRouter();
   const { pid } = router.query;
   const [user, setUser] = useState(false);
+  let apiEndpoint;
+  if (typeof window !== 'undefined' && process.env.NODE_ENV == 'development') {
+    apiEndpoint = "http://localhost:8080/graphql";
+  } else {
+    apiEndpoint = process.env.API_URL;
+  }
   useEffect(() => {
     if (pid) {
       (async () => {
         const client = new ApolloClient({
-          uri: process.env.API_URL,
+          uri: apiEndpoint,
           cache: new InMemoryCache(),
         });
 

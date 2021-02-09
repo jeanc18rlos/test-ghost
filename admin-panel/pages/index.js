@@ -19,8 +19,18 @@ const fields = [
 
 export default function Home({ data }) {
   const { register, handleSubmit, watch, errors } = useForm();
+  let apiEndpoint;
+  if (typeof window !== "undefined" && process.env.NODE_ENV == "development") {
+    apiEndpoint = "http://localhost:8080/graphql";
+  } else {
+    apiEndpoint = process.env.API_URL;
+  }
   const onSubmit = (formData) =>
     (async () => {
+      const client = new ApolloClient({
+        uri: apiEndpoint,
+        cache: new InMemoryCache(),
+      });
       const { resultData } = await client.mutate({
         mutation: gql`
           mutation signUp(
@@ -57,24 +67,18 @@ export default function Home({ data }) {
           }
         `,
         variables: {
-          firstName: "jeanss",
-          lastName: "carlosss",
-          userName: "jeanc18ss",
-          password: "ROma-1515+s",
-          email: "jeanc18rlos@gmail.co",
-          phone: "+58-424-1823782",
-          role: "admin",
-          birthDate: "Fri Apr 12 1996 00:00:00 GMT-0400 (Venezuela Time)",
-          gender: "male",
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          userName: formData.userName,
+          password: formData.password,
+          email: formData.email,
+          phone: formData.phone,
+          role: formData.role,
+          birthDate: formData.birthDate,
+          gender: formData.gender,
         },
       });
-
-      
     })();
-  const client = new ApolloClient({
-    uri: process.env.API_URL,
-    cache: new InMemoryCache(),
-  });
 
   return (
     <div className={styles.container}>
@@ -154,7 +158,6 @@ export async function getStaticProps() {
     uri: process.env.API_URL,
     cache: new InMemoryCache(),
   });
-
   const { data } = await client.query({
     query: gql`
       query {
