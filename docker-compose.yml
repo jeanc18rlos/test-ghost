@@ -1,0 +1,37 @@
+version: "3"
+
+networks: 
+  dev-network:
+    driver: bridge
+
+services:
+  api:
+    container_name: api
+    restart: always
+    build: ./server
+    networks:
+      - dev-network
+    ports:
+      - "8080:8080"
+    privileged:  true
+    volumes:
+      - './server:/api'
+      - 'api-node_modules:/api/node_modules'
+    links:
+      - mongo
+
+  mongo:
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=challenge
+      - MONGO_INITDB_ROOT_PASSWORD=Mv534r73
+      - MONGO_INITDB_DATABASE=challenge
+    image: mongo:latest
+    command: mongod --auth
+    networks:
+      - dev-network
+    ports:
+      - "27017:27017"
+      
+volumes:
+  api-node_modules:

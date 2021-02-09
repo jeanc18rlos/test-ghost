@@ -1,0 +1,38 @@
+{
+  "extends": [
+    "standard",
+    "prettier",
+    "prettier/standard"
+  ],
+  "plugins": [
+    "import",
+    "prettier",
+    "standard"
+  ],
+  
+  "parserOptions": {
+    "ecmaVersion": 8 ,
+    "sourceType": "module",
+
+    "ecmaFeatures": {
+      "modules": false,
+      "arrowFunctions": true,
+      "classes": true,
+      "destructuring": true,
+      "spread": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "rules": {
+    "space-before-function-paren": 0,
+    "new-cap": 0,
+    "prettier/prettier": ["error", {
+     "endOfLine":"auto"
+   }]
+  }
+}
